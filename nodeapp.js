@@ -16,7 +16,7 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
-const Item = require('./models/Item');
+const Item = require('./models/item.js');
 
 app.get('/', (req, res) => {
   Item.find()
