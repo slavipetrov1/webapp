@@ -1,7 +1,7 @@
 FROM node:16
 
 # Create app directoryd
-WORKDIR /usr/src/app
+WORKDIR ./
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
