@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "webapp"
+  namespace: "default"
+  labels:
+    app: "webapp"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "webapp"
+  template:
+    metadata:
+      labels:
+        app: "webapp"
+    spec:
+      containers:
+      - name: "webapp-1"
+        image: "gcr.io/nodeapp-383708/github.com/slavipetrov1/webapp:$SHORT_SHA"
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "webapp-hpa-xgxg"
+  namespace: "default"
+  labels:
+    app: "webapp"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "webapp"
+    apiVersion: "apps/v1"
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
